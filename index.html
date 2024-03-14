@@ -35,12 +35,21 @@
 <pre id="outputCitations"></pre>
 <button onclick="openReferenceTool()">一键编号/排序工具</button>
 <div style="text-align:center;"><p>南京大学法学院Chollima制作</p></div>
+<div style="text-align:center;"><p id="visitorCount">当前访客人数：加载中...</p></div>
 <div style="text-align:center;"><p>版权所有 禁止用于营利目的</p></div>
-
-<!-- 访客数量统计 -->
-<div style="text-align:center;"><p>当前访客数量：</p><p id="visitorCount"></p></div>
-
 <script src="main.js"></script>
 <script src="visitor_counter.js"></script>
+<script>
+    // 获取显示访客人数的元素
+    const visitorCountElement = document.getElementById('visitorCount');
+
+    // 更新访客人数的函数
+    function updateVisitorCount() {
+        visitorCountElement.textContent = `当前访客人数：${currentVisitorCount}`;
+    }
+
+    // 页面加载时更新访客人数
+    window.onload = updateVisitorCount;
+</script>
 </body>
 </html>
