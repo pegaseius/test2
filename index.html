@@ -37,26 +37,10 @@
 <div style="text-align:center;"><p>南京大学法学院Chollima制作</p></div>
 <div style="text-align:center;"><p>版权所有 禁止用于营利目的</p></div>
 
-<script src="main.js">
-    
-     // 从本地存储加载之前的访问次数
-    let visitCount = localStorage.getItem('visitCount');
-    if (!visitCount) {
-        visitCount = 100;
-    } else {
-        visitCount = parseInt(visitCount);
-    }
+<!-- 访客数量统计 -->
+<div style="text-align:center;"><p>当前访客数量：</p><p id="visitorCount"></p></div>
 
-    // 更新页面上的访问次数显示
-    document.getElementById('visitCount').textContent = visitCount;
-
-    // 每次页面加载时，访问次数加一
-    visitCount++;
-    document.getElementById('visitCount').textContent = visitCount;
-
-    // 将更新后的访问次数保存到本地存储
-    localStorage.setItem('visitCount', visitCount.toString());
-    
-</script>
+<script src="main.js"></script>
+<script src="visitor_counter.js"></script>
 </body>
 </html>
