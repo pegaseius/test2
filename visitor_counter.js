@@ -11,8 +11,8 @@ const timeDifference = currentTimeStamp - startTimeStamp;
 const timeDifferenceInSeconds = Math.floor(timeDifference / 1000);
 
 // 每隔10秒增加的访客数量范围
-const minIncrease = 3; // 最小增加数量
-const maxIncrease = 3; // 最大增加数量
+const minIncrease = 1; // 最小增加数量
+const maxIncrease = 1; // 最大增加数量
 
 // 计算当前时间段内的访客增加数量
 const visitorIncrease = Math.floor(timeDifferenceInSeconds / 10) * getRandomInt(minIncrease, maxIncrease);
