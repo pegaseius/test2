@@ -1,3 +1,6 @@
+理解了，如果要每10分钟增加1人，可以稍作修改。以下是更新后的HTML代码：
+
+```html
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -7,19 +10,23 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
     <script src="main.js" defer></script>
     <script defer>
-
+        
         const currentTimeStamp = Date.now();
+        
         const startTimeStamp = new Date('2024-03-14T17:00:00').getTime();
-        const timeDifference = currentTimeStamp - startTimeStamp;
-        const timeDifferenceInSeconds = Math.floor(timeDifference / 1000);
-        const adetime = 10075;
-        const olpitime = adetime + timeDifferenceInSeconds;
 
-        // 将当前访客数量显示在页面上
+        const timeDifference = currentTimeStamp - startTimeStamp;
+
+        const timeDifferenceInMinutes = Math.floor(timeDifference / (1000 * 60));
+
+        const visitorsPerTenMinutes = Math.floor(timeDifferenceInMinutes / 10);
+
+        const currentVisitorCount = 10075 + visitorsPerTenMinutes;
+
         document.addEventListener("DOMContentLoaded", function() {
             const visitorCountElement = document.getElementById("visitorCount");
             if (visitorCountElement) {
-                visitorCountElement.textContent = "累计访客人数：" + olpitime + " 人";
+                visitorCountElement.textContent = "当前访客人数：" + currentVisitorCount + " 人";
             }
         });
     </script>
@@ -57,3 +64,6 @@
 <div style="text-align:center;"><p>版权所有 禁止用于营利目的</p></div>
 </body>
 </html>
+```
+
+在这个版本中，我修改了计算当前访客数量的方式，使其每10分钟增加1人。
