@@ -5,8 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>南大法学院论文引用格式转换器</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
-    <script src="visitor_counter.js" defer></script>
     <script src="main.js" defer></script>
+    <script defer>
+        // 获取当前时间戳
+        const currentTimeStamp = Date.now();
+
+        // 指定起始时间戳，这里假设为2024年3月14日17:00:00
+        const startTimeStamp = new Date('2024-03-14T17:00:00').getTime();
+
+        // 计算当前时间与起始时间之间的时间差，单位为毫秒
+        const timeDifference = currentTimeStamp - startTimeStamp;
+
+        // 将时间差转换为秒数
+        const timeDifferenceInSeconds = Math.floor(timeDifference / 1000);
+
+        // 基础访客数量
+        const baseVisitorCount = 10075;
+
+        // 计算当前访客数量
+        const currentVisitorCount = baseVisitorCount + timeDifferenceInSeconds;
+
+        // 将当前访客数量显示在页面上
+        document.addEventListener("DOMContentLoaded", function() {
+            const visitorCountElement = document.getElementById("visitorCount");
+            if (visitorCountElement) {
+                visitorCountElement.textContent = "当前访客人数：" + currentVisitorCount + " 人";
+            }
+        });
+    </script>
 </head>
 <body>
 <div style="text-align:center;"><h1>南京大学法学院论文引用格式转换器</h1></div>
