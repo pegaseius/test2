@@ -38,75 +38,75 @@ function convertCitation(inputCitation) {
     match = inputCitation.match(regexWithPages);
     if (match) {
         const period = parseInt(match[6], 10); // 转换期号为整数以去除前导零
-        return `《${match[2]}》，载《${match[4]}》${match[5]}年第${period}期，第${match[7]}-${match[8]}页。`;
+        return `${match[1]}：《${match[2]}》，载《${match[4]}》${match[5]}年第${period}期，第${match[7]}-${match[8]}页。`;
     }
 
     match = inputCitation.match(regexWith1Page);
     if (match) {
         const period = parseInt(match[6], 10); // 转换期号为整数以去除前导零
-        return `《${match[2]}》，载《${match[4]}》${match[5]}年第${period}期，第${match[7]}页。`;
+        return `${match[1]}：《${match[2]}》，载《${match[4]}》${match[5]}年第${period}期，第${match[7]}页。`;
     }
 
     match = inputCitation.match(regexWithoutPages);
     if (match) {
         const period = parseInt(match[6], 10); // 转换期号为整数以去除前导零
-        return `《${match[2]}》，载《${match[4]}》${match[5]}年第${period}期。`;
+        return `${match[1]}：《${match[2]}》，载《${match[4]}》${match[5]}年第${period}期。`;
     }
 
     match = inputCitation.match(regexzhiwangqikan);
     if (match) {
         const period = parseInt(match[6], 10); // 转换期号为整数以去除前导零
-        return `《${match[1]}》，载《${match[4]}》${match[5]}年第${period}期。`;
+        return `${match[3]}：《${match[1]}》，载《${match[4]}》${match[5]}年第${period}期。`;
     }
 
     match = inputCitation.match(regexPublisher);
     if (match) {
-        return `《${match[2]}》，${match[4]}${match[5]}年版。`;
+        return `${match[1]}：《${match[2]}》，${match[4]}${match[5]}年版。`;
     }
 
     match = inputCitation.match(regexPublisherwithpages);
     if (match) {
-        return `《${match[2]}》，${match[4]}${match[5]}年版，第${match[6]}-${match[7]}页。`;
+        return `${match[1]}：《${match[2]}》，${match[4]}${match[5]}年版，第${match[6]}-${match[7]}页。`;
     }
 
     match = inputCitation.match(regexPublisherwith1page);
     if (match) {
-        return `《${match[2]}》，${match[5]}${match[6]}年版，第${match[7]}页。`;
+        return `${match[1]}：《${match[2]}》，${match[5]}${match[6]}年版，第${match[7]}页。`;
     }
 
     match = inputCitation.match(regexzhiwangbookz);
     if (match) {
-        return `《${match[1]}》，${match[5]}${match[6]}年版。`;
+        return `${match[3]}：《${match[1]}》，${match[5]}${match[6]}年版。`;
     }
 
     match = inputCitation.match(regexzhiwangbookzb);
     if (match) {
-        return `《${match[1]}》，${match[5]}${match[6]}年版。`;
+        return `${match[3]}：《${match[1]}》，${match[5]}${match[6]}年版。`;
     }
 
     match = inputCitation.match(regexzhiwangbook);
     if (match) {
-        return `《${match[1]}》，${match[4]}${match[5]}年版。`;
+        return `${match[3]}：《${match[1]}》，${match[4]}${match[5]}年版。`;
     }
 
     match = inputCitation.match(regexDegree);
     if (match) {
-        return `《${match[2]}》，${match[5]}${match[6]}年博士论文。`;
+        return `${match[1]}：《${match[2]}》，${match[5]}${match[6]}年博士论文。`;
     }
 
     match = inputCitation.match(regexDegreewithpages);
     if (match) {
-        return `《${match[2]}》，${match[5]}${match[6]}年博士论文,第${match[7]}-${match[8]}页。`;
+        return `${match[1]}：《${match[2]}》，${match[5]}${match[6]}年博士论文,第${match[7]}-${match[8]}页。`;
     }
 
     match = inputCitation.match(regexDegreewith1page);
     if (match) {
-        return `《${match[2]}》，${match[5]}${match[6]}年博士论文,第${match[7]}页。`;
+        return `${match[1]}：《${match[2]}》，${match[5]}${match[6]}年博士论文,第${match[7]}页。`;
     }
 
     match = inputCitation.match(regexzhiwangdegree);
     if (match) {
-        return `《${match[1]}》，${match[4]}${match[5]}年博士论文。`;
+        return `${match[3]}：《${match[1]}》，${match[4]}${match[5]}年博士论文。`;
     }
 
     // 如果都匹配不到，返回错误信息
@@ -120,8 +120,13 @@ function convertAndDisplay() {
 
     // 遍历每个文献，转换并拼接到输出文本中
     inputCitationArray.forEach(inputCitation => {
-        const outputCitation = convertCitation(inputCitation.trim().replace(/;/g, '、')); // 转换引用格式，并去除首尾空格，将分号替换为中文逗号
-        outputCitations += outputCitation.replace(/([^\x00-\xff]),([^\x00-\xff])/g, '$1、$2') + '\n'; // 将转换后的引用文本拼接到输出文本中，替换逗号为顿号
+        // 检查是否为空行
+        if (inputCitation.trim() === '') {
+            outputCitations += '\n'; // 如果是空行，则在输出文本中添加相应的空行
+        } else {
+            const outputCitation = convertCitation(inputCitation.trim().replace(/;/g, '、')); // 转换引用格式，并去除首尾空格，将分号替换为中文逗号
+            outputCitations += outputCitation.replace(/([^\x00-\xff]),([^\x00-\xff])/g, '$1、$2') + '\n'; // 将转换后的引用文本拼接到输出文本中，替换逗号为顿号
+        }
     });
 
     document.getElementById('outputCitations').textContent = outputCitations.trim(); // 将输出文本显示在页面上
