@@ -17,7 +17,6 @@ function openReferenceTool() {
 
 function convertCitation(inputCitation) {
     // 正则表达式
-    const regexendnote4JA = /^%0\s(.+?)\n%A\s(.+?)\n%\+\s(.+?),?\n%T\s(.+?)\n%J\s(.+?)\n%D\s(\d+)\n%N\s(\d{1,2})\n%K\s(.+?)\n%X\s(.+?)\n%P\s([\d\+\-]+)\n%@\s(.+?)\n%L\s(.+?)\n%W\s(.+)/;
     const regexWithPages = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4})\((\d{1,2})\):(\d+)-(\d+)\.$/;
     const regexWith1Page = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4})\((\d{1,2})\):(\d+)\.$/;
     const regexWithoutPages = /^(.+?)\.(.+?)\[(.+?)\]\.(.+?),(\d{4})\((\d{1,2})\)\.$/;
@@ -39,11 +38,6 @@ function convertCitation(inputCitation) {
     // 逐个尝试匹配
     let match;
 
-    match = inputCitation.match(regexendnote4JA);
-    if (match) {
-        return `${match[2]}：《${match[4]}》，载《${match[5]}》${match[6]}年第${match[7]}期，第${match[10]}页。`;
-    }
-    
     match = inputCitation.match(regexWithPages);
     if (match) {
         const period = parseInt(match[6], 10); // 转换期号为整数以去除前导零
