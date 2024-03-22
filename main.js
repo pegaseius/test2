@@ -59,13 +59,13 @@ function convertCitation(inputCitation) {
         match = inputCitation.match(regexWithPagesandv);
     if (match) {
         const period = parseInt(match[7], 10); // 转换期号为整数以去除前导零
-        return `${match[1]}：《${match[2]}》，载《${match[4]}》${match[5]}年第${match[6]}卷第${period}期，第${match[7]}-${match[8]}页。`;
+        return `${match[1]}：《${match[2]}》，载《${match[4]}》${match[5]}年第${match[6]}卷第${period}期，第${match[8]}-${match[9]}页。`;
     }
 
     match = inputCitation.match(regexWith1Pageandv);
     if (match) {
         const period = parseInt(match[7], 10); // 转换期号为整数以去除前导零
-        return `${match[1]}：《${match[2]}》，载《${match[4]}》${match[5]}年第${match[6]}卷第${period}期，第${match[7]}页。`;
+        return `${match[1]}：《${match[2]}》，载《${match[4]}》${match[5]}年第${match[6]}卷第${period}期，第${match[8]}页。`;
     }
 
     match = inputCitation.match(regexWithoutPagesandv);
