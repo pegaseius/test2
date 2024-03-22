@@ -34,55 +34,49 @@ function convertCitation(inputCitation) {
     const regexDegreewithpages = /^(.+?)\.(.+?)\[(D)\]\.(.+?):(.+?),(\d+):(\d+)-(\d+)\.$/;
     const regexDegreewith1page = /^(.+?)\.(.+?)\[(D)\]\.(.+?):(.+?),(\d+):(\d+)\.$/;
     const regexzhiwangdegree = /^(.+?)\[(\w)\]\.\s*(.+?)\.(.+?),(\d+)$/;
-    const regexCustomFormat = /^%0\s(.+?)\n%A\s(.+?)\n%\+\s(.+?),?\n%T\s(.+?)\n%J\s(.+?)\n%D\s(\d+)\n%N\s(\d{1,2})\n%K\s(.+?)\n%X\s(.+?)\n%P\s([\d\+\-]+)\n%@\s(.+?)\n%L\s(.+?)\n%W\s(.+)/;
 
     // 逐个尝试匹配
     let match;
 
-    match = inputCitation.match(regexCustomFormat);
-    if (match) {
-        return `${match[2]}：《${match[4]}》，载《${match[5]}》${match[6]}年第${match[7]}期，第${match[10]}页。`;
-    }
-
     match = inputCitation.match(regexWithPages);
     if (match) {
         const period = parseInt(match[6], 10); // 转换期号为整数以去除前导零
-        return `${match[2]}：《${match[4]}》，载《${match[5]}》${match[6]}年第${period}期，第${match[7]}-${match[8]}页。`;
+        return `${match[1]}：《${match[2]}》，载《${match[4]}》${match[5]}年第${period}期，第${match[7]}-${match[8]}页。`;
     }
 
     match = inputCitation.match(regexWith1Page);
     if (match) {
         const period = parseInt(match[6], 10); // 转换期号为整数以去除前导零
-        return `${match[2]}：《${match[4]}》，载《${match[5]}》${match[6]}年第${period}期，第${match[7]}页。`;
+        return `${match[1]}：《${match[2]}》，载《${match[4]}》${match[5]}年第${period}期，第${match[7]}页。`;
     }
 
     match = inputCitation.match(regexWithoutPages);
     if (match) {
         const period = parseInt(match[6], 10); // 转换期号为整数以去除前导零
-        return `${match[2]}：《${match[4]}》，载《${match[5]}》${match[6]}年第${period}期。`;
+        return `${match[1]}：《${match[2]}》，载《${match[4]}》${match[5]}年第${period}期。`;
     }
 
-    match = inputCitation.match(regexWithPagesandv);
+        match = inputCitation.match(regexWithPagesandv);
     if (match) {
         const volume = parseInt(match[6], 10); // 转换卷号为整数以去除前导零
         const period = parseInt(match[7], 10); // 转换期号为整数以去除前导零
-        return `${match[2]}：《${match[4]}》，载《${match[5]}》${match[6]}年第${volume}卷第${period}期，第${match[8]}-${match[9]}页。`;
+        return `${match[1]}：《${match[2]}》，载《${match[4]}》${match[5]}年第${volume}卷第${period}期，第${match[8]}-${match[9]}页。`;
     }
 
     match = inputCitation.match(regexWith1Pageandv);
     if (match) {
         const volume = parseInt(match[6], 10); // 转换卷号为整数以去除前导零
         const period = parseInt(match[7], 10); // 转换期号为整数以去除前导零
-        return `${match[2]}：《${match[4]}》，载《${match[5]}》${match[6]}年第${volume}卷第${period}期，第${match[8]}页。`;
+        return `${match[1]}：《${match[2]}》，载《${match[4]}》${match[5]}年第${volume}卷第${period}期，第${match[8]}页。`;
     }
 
     match = inputCitation.match(regexWithoutPagesandv);
     if (match) {
         const volume = parseInt(match[6], 10); // 转换卷号为整数以去除前导零
         const period = parseInt(match[7], 10); // 转换期号为整数以去除前导零
-        return `${match[2]}：《${match[4]}》，载《${match[5]}》${match[6]}年第${volume}卷第${period}期。`;
+        return `${match[1]}：《${match[2]}》，载《${match[4]}》${match[5]}年第${volume}卷第${period}期。`;
     }
-
+    
     match = inputCitation.match(regexzhiwangqikan);
     if (match) {
         const period = parseInt(match[6], 10); // 转换期号为整数以去除前导零
@@ -138,7 +132,7 @@ function convertCitation(inputCitation) {
     if (match) {
         return `${match[3]}：《${match[1]}》，${match[4]}${match[5]}年博士论文。`;
     }
-    
+
     // 如果都匹配不到，返回错误信息
     return "无法识别的引用格式";
 }
@@ -149,22 +143,21 @@ function convertAndDisplay() {
     let outputCitations = ''; // 初始化输出的引用文本
 
     // 遍历每个文献，转换并拼接到输出文本中
-inputCitationArray.forEach(inputCitation => {
-    const outputCitation = convertCitation(inputCitation.trim().replace(/;/g, '、')); // 转换引用格式，并去除首尾空格，将分号替换为中文逗号
-    outputCitations += outputCitation.replace(/([^\x00-\xff]),([^\x00-\xff])/g, '$1、$2') + '\n'; // 将转换后的引用文本拼接到输出文本中，替换逗号为顿号
-});
+    inputCitationArray.forEach(inputCitation => {
+        const outputCitation = convertCitation(inputCitation.trim().replace(/;/g, '、')); // 转换引用格式，并去除首尾空格，将分号替换为中文逗号
+        outputCitations += outputCitation.replace(/([^\x00-\xff]),([^\x00-\xff])/g, '$1、$2') + '\n'; // 将转换后的引用文本拼接到输出文本中，替换逗号为顿号
+    });
 
-document.getElementById('outputCitations').textContent = outputCitations.trim(); // 将输出文本显示在页面上
+    document.getElementById('outputCitations').textContent = outputCitations.trim(); // 将输出文本显示在页面上
 }
 
 function copyToClipboard() {
-const outputCitations = document.getElementById('outputCitations').textContent;
-const tempTextArea = document.createElement('textarea');
-tempTextArea.value = outputCitations;
-document.body.appendChild(tempTextArea);
-tempTextArea.select();
-document.execCommand('copy');
-document.body.removeChild(tempTextArea);
-alert('已复制到剪贴板');
+    const outputCitations = document.getElementById('outputCitations').textContent;
+    const tempTextArea = document.createElement('textarea');
+    tempTextArea.value = outputCitations;
+    document.body.appendChild(tempTextArea);
+    tempTextArea.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempTextArea);
+    alert('已复制到剪贴板');
 }
-
