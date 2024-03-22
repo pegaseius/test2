@@ -34,7 +34,7 @@ function convertCitation(inputCitation) {
     const regexDegreewithpages = /^(.+?)\.(.+?)\[(D)\]\.(.+?):(.+?),(\d+):(\d+)-(\d+)\.$/;
     const regexDegreewith1page = /^(.+?)\.(.+?)\[(D)\]\.(.+?):(.+?),(\d+):(\d+)\.$/;
     const regexzhiwangdegree = /^(.+?)\[(\w)\]\.\s*(.+?)\.(.+?),(\d+)$/;
-    const regexendnote4JA = /%0\s(.+?)\n%A\s(.+?)\n%\+\s(.+?),?\n%T\s(.+?)\n%J\s(.+?)\n%D\s(\d+)\n%N\s(\d{1,2})\n%K\s(.+?)\n%X\s(.+?)\n%P\s([\d\+\-]+)\n%@\s(.+?)\n%L\s(.+?)\n%W\s(.+)/gm;
+    const regexendnote4JA = /^%0\s(.+?)\n%A\s(.+?)\n%\+\s(.+?),?\n%T\s(.+?)\n%J\s(.+?)\n%D\s(\d+)\n%N\s(\d{1,2})\n%K\s(.+?)\n%X\s(.+?)\n%P\s([\d\+\-]+)\n%@\s(.+?)\n%L\s(.+?)\n%W\s(.+)/gm;
 
     // 逐个尝试匹配
     let match;
