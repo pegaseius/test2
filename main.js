@@ -34,6 +34,7 @@ function convertCitation(inputCitation) {
     const regexDegreewithpages = /^(.+?)\.(.+?)\[(D)\]\.(.+?):(.+?),(\d+):(\d+)-(\d+)\.$/;
     const regexDegreewith1page = /^(.+?)\.(.+?)\[(D)\]\.(.+?):(.+?),(\d+):(\d+)\.$/;
     const regexzhiwangdegree = /^(.+?)\[(\w)\]\.\s*(.+?)\.(.+?),(\d+)$/;
+    const regexendnote4JA = /%0\s(.+?)\n%A\s(.+?)\n%\+\s(.+?),?\n%T\s(.+?)\n%J\s(.+?)\n%D\s(\d+)\n%N\s(\d{1,2})\n%K\s(.+?)\n%X\s(.+?)\n%P\s([\d\+\-]+)\n%@\s(.+?)\n%L\s(.+?)\n%W\s(.+)/gm;
 
     // 逐个尝试匹配
     let match;
@@ -133,6 +134,11 @@ function convertCitation(inputCitation) {
         return `${match[3]}：《${match[1]}》，${match[4]}${match[5]}年博士论文。`;
     }
 
+    match = inputCitation.match(regexendnote4JA);
+    if (match) {
+        return `${match[2]}：《${match[4]}》，载《${match[5]}》${match[6]}年第${match[7]}期，第${match[10]}页。`;
+    }
+    
     // 如果都匹配不到，返回错误信息
     return "无法识别的引用格式";
 }
